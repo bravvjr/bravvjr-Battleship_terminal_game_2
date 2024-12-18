@@ -6,9 +6,10 @@ This is a simple **Battleship** game created using Python, which is played direc
 
 ## Features
 
-- **2-player mode**: Play against a friend on the same computer.
-- **Terminal-based**: Simple interface using the command line.
-- **Ships**: The game features multiple ships of different sizes that must be located and sunk.
+- **Computer VS Player mode**: Play against a friend on the same computer.
+- **User-Friendly**: Input validation ensure the player enters valid input and prevents duplicate shots.
+- **Difficulty Levels**: The program adapts the board size and number of ships to match the chosen difficulty.
+- **Smart AI Opponent**: The computer uses intelligent targeting logic to provide a challenging experience.
 - **Grid-based**: The game is played on a grid where each player places their ships and attempts to guess the location of the opponent’s ships.
 
 ## Requirements
@@ -21,6 +22,7 @@ This is a simple **Battleship** game created using Python, which is played direc
    ```bash
    git clone <repository-url>
    cd battleship
+   pip install tabulate
    ```
 
 ## Run the game:
@@ -32,45 +34,46 @@ python3 battleship.py
 
 ```
 
-# How to Play
+# How to Play Battleship
+Battleship is a turn-based strategy game where you aim to sink your opponent's ships by guessing their locations on the board.
 
-1. Place your ships:
-   Each player places their ships on the grid. The grid is typically 10x10,
-   and ships can be placed horizontally or vertically. The ships’ sizes vary,
-   and you must position them strategically to avoid being hit.
+**Game Setup**
+Choose a Difficulty Level:
 
-2. Turn-based gameplay:
-   Players take turns guessing where the opponent's ships are located by entering coordinates
-   (e.g., A5 for row A, column 5).
+-Easy: 5x5 grid with 1 ship.
+-Medium: 8x8 grid with 2 ships.
+-Hard: 10x10 grid with 4 ships.
+-Select Players:
 
-3. Hit or Miss:
-   After each guess, you will see whether the shot was a "hit" or "miss."
-   The goal is to sink all of the opponent's ships.
+**Play against the Computer in single-player mode**.
+Place Ships:
 
-4. Winning the Game:
-   The first player to sink all of the opponent's ships wins the game.
+Ships are automatically placed for you and the computer. Ships vary in size:
+Battleship: 5 tiles long.
+Cruiser: 4 tiles long.
+Destroyer: 3 tiles long.
+Submarine: 2 tiles long.
+Gameplay
+Player’s Turn:
 
-# Game Controls
+Input your target in the format ROW,COLUMN (e.g., A,1) to fire a shot.
+The game will tell you if your shot is a hit or miss.
+Sinking all parts of a ship removes it from the opponent’s fleet.
+Computer’s Turn:
 
-- Enter coordinates to make a guess (e.g., A1, B2, etc.).
-- After each guess, the result (hit or miss) will be displayed,
-  and the turn will switch to the other player.
+The computer fires back using a mix of random shots and smart targeting when it scores a hit.
+**Visual Feedback**:
 
-Welcome to Battleship!
+Your board shows your ships and the computer's hits.
+The opponent's board (computer) reveals hits and misses but hides ship locations.
+**Winning the Game**
+The game ends when one player sinks all the opponent's ships. If your fleet is destroyed, the computer wins. If you sink all the computer’s ships, you win!
+**Additional Features**
+Smart AI: The computer uses a strategy to target adjacent cells after scoring a hit.
+Grid Reference: Rows are labeled A, B, C, etc., and columns are numbered 1, 2, 3, etc.
+Enjoy the game and may the best strategist win! 🎯
 
-Player 1, it's your turn!
-Enter coordinates to attack (e.g., A1):
 
-> A1
-> Result: Miss!
-
-Player 2, it's your turn!
-Enter coordinates to attack (e.g., B3):
-
-> B3
-> Result: Hit!
-
-And so on...
 
 ### Support and Contact Details
 
