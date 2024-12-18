@@ -1,5 +1,5 @@
-from ship import Ship  # type: ignore
-from board import Board  # type: ignore
+from ship import Ship
+from board import Board
 
 
 class Player():
