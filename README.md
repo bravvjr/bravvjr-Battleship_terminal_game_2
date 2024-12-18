@@ -21,6 +21,7 @@ This is a simple **Battleship** game created using Python, which is played direc
    ```bash
    git clone <repository-url>
    cd battleship
+   pip install tabulate
    ```
 
 ## Run the game:
