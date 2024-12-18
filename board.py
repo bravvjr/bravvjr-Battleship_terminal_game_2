@@ -1,48 +1,97 @@
 import random
+from tabulate import tabulate
 
 class Board:
-    def __init__(self, size):
+    def __init__ (self, name, size):
+        self.name = name
         self.rows = size[0]
         self.columns = size[1]
-        self.board = [['~' for _ in range(self.columns)] for _ in range(self.rows)]
-
-    def print_board(self, reveal_ships):
-        result = '  ' + ' '.join([str(i+1) for i in range(self.columns)]) + '\n'
+        self.board = []
         for i in range(self.rows):
-            result += chr(i+65) + ' '  # Row letters (A, B, C, ...)
+            row = []
             for j in range(self.columns):
-                if reveal_ships:
-                    result += self.board[i][j] + ' '
-                else:
-                    result += '~ '  # Use ~ to hide the ships
-            result += '\n'
-        return result
-
-    def place_ship(self, ship):
-        while True:
-            orientation = random.choice(['H', 'V'])
-            if orientation == 'H':
-                row = random.randint(0, self.rows - 1)
-                col = random.randint(0, self.columns - ship.length)
-                if all(self.board[row][col+i] == '~' for i in range(ship.length)):
-                    for i in range(ship.length):
-                        self.board[row][col+i] = 'S'
-                        ship.coordinates.append([row, col+i])
-                    break
-            else:
-                row = random.randint(0, self.rows - ship.length)
-                col = random.randint(0, self.columns - 1)
-                if all(self.board[row+i][col] == '~' for i in range(ship.length)):
-                    for i in range(ship.length):
-                        self.board[row+i][col] = 'S'
-                        ship.coordinates.append([row+i, col])
-                    break
-
-    def update_board(self, shot):
-        row, col = shot
-        if self.board[row][col] == 'S':
-            self.board[row][col] = 'X'
-            return "hit"
+                row.append("")
+            self.board.append(row)
+            
+    def print_board (self, show=False):
+        #Create column headers
+        header = []
+        for i in range(self.columns):
+            header.append(i+1)
+        #Creater row headers
+        rows = []
+        for i in range(self.rows):
+            rows.append(chr(i+65))
+        if show == True:
+            table = self.board
         else:
-            self.board[row][col] = 'O'
+            table = []
+            for row in self.board:
+                new_row = []
+                for item in row:
+                    if item != "X" and item != "O":
+                        new_row.append("")
+                    else:
+                        new_row.append(item)
+                table.append(new_row)
+                
+        #Return formatted table
+        return (tabulate(table, header, showindex=rows, numalign="center", stralign="center", tablefmt="fancy_grid"))
+    
+    def place_ship (self, ship):
+        orientation = random.choice(["horizontal", "vertical"])
+        coordinates = []
+        if orientation == "horizontal":
+            #Place ship horizontally
+            #Check to make sure the starting point will not result in the ship being placed off the map
+            while True:
+                start = [random.randint(0,self.rows -1), random.randint(0, self.columns-1)]
+                while (start[1] + ship.length > self.columns):
+                    start[1] -=1
+                #Check to make sure the ship will not be placed over top of another ship
+                unique = True
+                for i in range(ship.length):
+                    if self.board[start[0]][start[1]+i] != "":
+                        unique = False
+                        break
+                if unique == True:
+                    break
+            for i in range(ship.length):
+                self.board[start[0]][start[1]+i] = ship.name[0]
+                coordinates.append([start[0],start[1]+i])
+        else:
+            #Place ship vertically
+            #Check to make sure the starting point will not result in the ship being placed off the map
+            while True:
+                start = [random.randint(0,self.rows -1), random.randint(0, self.columns-1)]
+                while (start[0] + ship.length > self.rows):
+                    start[0] -=1
+                #Check to make sure the ship will not be placed over top of another ship
+                unique = True
+                for i in range(ship.length):
+                    if self.board[start[0]+i][start[1]] != "":
+                        unique = False
+                        break
+                if unique == True:
+                    break
+            for i in range(ship.length):
+                self.board[start[0]+i][start[1]] = ship.name[0]
+                coordinates.append([start[0]+i,start[1]])
+        return coordinates
+        
+    
+    def update_board (self, coordinate):
+        if self.board[coordinate[0]][coordinate[1]] == "":
+            self.board[coordinate[0]][coordinate[1]] = "O"
+            print(self.print_board(False))
+            print("\nYou missed\n")
             return "miss"
+        else:
+            self.board[coordinate[0]][coordinate[1]] = "X"
+            print(self.print_board(False))
+            print("\nYou hit\n")
+            return "hit"
+        
+        
+    
+     
