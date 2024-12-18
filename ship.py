@@ -17,7 +17,7 @@ class Ship:
             message = "{name} has been sunk.".format(name=self.name)
         else:
             hits = self.hits.count(True)
-            message = "{name} is in the game and has been hit {hits} times.".format(
+            message = "{name} has been hit {hits} times.".format(
                 name=self.name, hits=hits)
         return message
 

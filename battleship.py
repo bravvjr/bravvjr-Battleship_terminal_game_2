@@ -63,20 +63,20 @@ def get_players():
     #Get 1 or 2 player game
     players = []
     while True:
-        num_players = input("You can play Battleship as a 1 player or 2 player game.\n\n1. 1 Player\n2. 2 Players\n\n")
+        num_players = input("Play Battleship against the computer.\n\n1. 1 Player VS Computer\n")
         if num_players == "1":
             clear_screen()
             name = input("\nWhat is your name?\n\n")
             players.append(Player(name))
             break
-        elif num_players == "2":
-            clear_screen()
-            name = input("\nWhat the name for player 1?\n\n")
-            players.append(Player(name))
-            clear_screen()
-            name = input("\nWhat the name for player 2?\n\n")
-            players.append(Player(name))
-            break
+        # elif num_players == "2":
+        #     clear_screen()
+        #     name = input("\nWhat the name for player 1?\n\n")
+        #     players.append(Player(name))
+        #     clear_screen()
+        #     name = input("\nWhat the name for player 2?\n\n")
+        #     players.append(Player(name))
+        #     break
         else:
             clear_screen()
             print("Please enter a valid option, 1 or 2")
@@ -85,10 +85,10 @@ def get_players():
     
 def get_difficulty():
     #Choose difficulty
-    difficulty = int(input("""Please choose difficulty:\n\n
-        1. Easy
-        2. Medium
-        3. Hard\n\n"""))
+    difficulty = int(input("""Choose your board type:\n\n
+        1. 5*5 Grid
+        2. 8*8 Grid
+        3. 10*10 Grid\n\n"""))
     clear_screen()
     return difficulty
 
@@ -184,49 +184,49 @@ def one_player_game():
         clear_screen()
 
 
-def two_player_game():
-    clear_screen()
-    turn = 0
-    attacker = 0
-    defender = 0
-    while players[defender].ships_remaining > 0:
-        attacker = turn % 2
-        if attacker == 0:
-            defender = 1
-        else:
-            defender = 0
+# def two_player_game():
+#     clear_screen()
+#     turn = 0
+#     attacker = 0
+#     defender = 0
+#     while players[defender].ships_remaining > 0:
+#         attacker = turn % 2
+#         if attacker == 0:
+#             defender = 1
+#         else:
+#             defender = 0
         
-        print("Player {player}'s turn".format(player = players[attacker].name))
-        print("\n{player}'s Board".format(player = players[attacker].name))
-        print(players[attacker].board.print_board(True))
+#         print("Player {player}'s turn".format(player = players[attacker].name))
+#         print("\n{player}'s Board".format(player = players[attacker].name))
+#         print(players[attacker].board.print_board(True))
 
-        print("\n{player}'s Board".format(player = players[defender].name))
-        print(players[defender].board.print_board(False))
+#         print("\n{player}'s Board".format(player = players[defender].name))
+#         print(players[defender].board.print_board(False))
     
-        while True:
-            shot = get_shot(players[attacker],players[defender].board.rows, players[defender].board.columns)
-            if shot != False:
-                break
-        clear_screen()
-        print("Player {player}'s turn".format(player = players[attacker].name))
-        print("\n{player}'s Board".format(player = players[attacker].name))
-        print(players[attacker].board.print_board(True))
+#         while True:
+#             shot = get_shot(players[attacker],players[defender].board.rows, players[defender].board.columns)
+#             if shot != False:
+#                 break
+#         clear_screen()
+#         print("Player {player}'s turn".format(player = players[attacker].name))
+#         print("\n{player}'s Board".format(player = players[attacker].name))
+#         print(players[attacker].board.print_board(True))
 
-        print("\n{player}'s Board\n".format(player = players[defender].name))        
-        hit = players[defender].board.update_board(shot)
-        if hit == "hit":
-            for ship in players[defender].ships:
-                if shot in ship.coordinates:
-                    ship.hit()
-                    if ship.sunk == True:
-                        players[defender].ships_remaining -= 1
-        input("\nHit Enter then pass the computer to your partner")
-        clear_screen()
-        input("Hit Enter when you're ready")
-        clear_screen()
-        turn += 1
-    finish = input("Game Over! Press Enter to exit game")
-    clear_screen()
+#         print("\n{player}'s Board\n".format(player = players[defender].name))        
+#         hit = players[defender].board.update_board(shot)
+#         if hit == "hit":
+#             for ship in players[defender].ships:
+#                 if shot in ship.coordinates:
+#                     ship.hit()
+#                     if ship.sunk == True:
+#                         players[defender].ships_remaining -= 1
+#         input("\nHit Enter then pass the computer to your partner")
+#         clear_screen()
+#         input("Hit Enter when you're ready")
+#         clear_screen()
+#         turn += 1
+#     finish = input("Game Over! Press Enter to exit game")
+#     clear_screen()
 
 # Initiate the Game
 clear_screen()
@@ -261,10 +261,8 @@ for player in players:
     player.place_ships()
 
 one_player_game()    
-#count players
-if len(players) == 1:
-    one_player_game()
-else:
-    two_player_game()
-     
-      
+
+# if len(players) == 1:
+#     one_player_game()
+# else:
+#     two_player_game()
